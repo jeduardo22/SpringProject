@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.springNelio.domain.Categoria;
 import com.springNelio.repositories.CategoriaRepository;
+import com.springNelio.services.exceptions.ObjectNotFoundException;
+
+
 
 @Service
 public class CategoriaService {
@@ -17,7 +20,8 @@ public class CategoriaService {
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id) ;
 		//Categoria obj = repo.findOne(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 		
 	}
 
